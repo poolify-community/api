@@ -1,8 +1,6 @@
-const getVaults = require('../../utils/getVaults.js');
 const { getStrategies } = require('../../utils/getStrategies.js');
 const { getLastHarvests } = require('../../utils/getLastHarvests.js');
-
-const { MULTICHAIN_ENDPOINTS } = require('../../constants');
+const { MULTICHAIN_POOLS } = require('../../constants');
 
 const INIT_DELAY = 0 * 1000;
 const REFRESH_INTERVAL = 5 * 60 * 1000;
@@ -22,13 +20,13 @@ const updateMultichainVaults = async () => {
   multichainVaults = [];
   multichainVaultsCounter = 0;
   multichainActiveVaultsCounter = 0;
-
   try {
-    for (let chain in MULTICHAIN_ENDPOINTS) {
-      let endpoint = MULTICHAIN_ENDPOINTS[chain];
-      let chainVaults = await getVaults(endpoint);
-      chainVaults = await getStrategies(chainVaults, chain);
-      chainVaults = await getLastHarvests(chainVaults, chain);
+    for (let chain in MULTICHAIN_POOLS) {
+      
+      //console.log('MULTICHAIN_POOLS',MULTICHAIN_POOLS);
+      let chainVaults = MULTICHAIN_POOLS[chain];
+          chainVaults = await getStrategies(chainVaults, chain);
+          chainVaults = await getLastHarvests(chainVaults, chain);
 
       var chainVaultsCounter = 0;
       var chainActiveVaultsCounter = 0;
@@ -56,13 +54,7 @@ const updateMultichainVaults = async () => {
       // );
     }
 
-    console.log(
-      '> updated',
-      multichainVaultsCounter,
-      'vaults (',
-      multichainActiveVaultsCounter,
-      'active )'
-    );
+    console.log(`> updated ${multichainVaultsCounter} vaults (${multichainActiveVaultsCounter} active )`);
   } catch (err) {
     console.error('> vaults update failed', err);
   }

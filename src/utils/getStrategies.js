@@ -11,6 +11,7 @@ const getStrategies = async (vaults, chain) => {
   // Setup multichain
   const web3 = _web3Factory(ChainId[chain]);
   const multicall = new MultiCall(web3, multicallAddress(ChainId[chain]));
+  console.log('multicallAddress(ChainId[chain])',multicallAddress(ChainId[chain]));
 
   // Split query in batches
   const query = vaults.map(v => v.earnedTokenAddress);

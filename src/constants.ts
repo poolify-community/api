@@ -69,12 +69,12 @@ const MULTICHAIN_RPC: Record<ChainId, string> = {
   [ChainId.bscTest]: BSC_TEST_RPC
 };
 
-const BSC_VAULTS_ENDPOINT = require('../pools/bsc');
-const BSC_TEST_VAULTS_ENDPOINT = require('../pools/bscTest');
+const BSC_VAULTS_POOLS = require('../pools/bsc');
+const BSC_TEST_VAULTS_POOLS = require('../pools/bscTest');
 
-const MULTICHAIN_ENDPOINTS = {
-  bsc: BSC_VAULTS_ENDPOINT,
-  bscTest : BSC_TEST_VAULTS_ENDPOINT
+const MULTICHAIN_POOLS = {
+  bsc: BSC_VAULTS_POOLS.pools,
+  bscTest : BSC_TEST_VAULTS_POOLS.pools
 };
 
 const BEEFY_PERFORMANCE_FEE = 0.045;
@@ -87,10 +87,10 @@ export {
   BSC_RPC,
   BSC_RPC_ENDPOINTS,
   BSC_CHAIN_ID,
-  BSC_VAULTS_ENDPOINT,
+  BSC_VAULTS_POOLS,
   BSC_TEST_RPC,
   BSC_TEST_CHAIN_ID,
-  BSC_TEST_VAULTS_ENDPOINT,
+  BSC_TEST_VAULTS_POOLS,
   BASE_HPY,
   MINUTELY_HPY,
   HOURLY_HPY,
@@ -100,7 +100,7 @@ export {
   FORTUBE_REQ_MARKETS,
   FORTUBE_API_TOKEN,
   MULTICHAIN_RPC,
-  MULTICHAIN_ENDPOINTS,
+  MULTICHAIN_POOLS,
   DFYN_LPF,
   SUSHI_LPF,
   SPIRIT_LPF,

@@ -2,7 +2,9 @@ const getChainTvl = require('./getChainTvl.js');
 
 const {
   BSC_CHAIN_ID,
+  BSC_TEST_CHAIN_ID,
   BSC_VAULTS_ENDPOINT,
+  BSC_TEST_VAULTS_ENDPOINT
 } = require('../../constants');
 
 const INIT_DELAY = 40 * 1000;
@@ -15,6 +17,11 @@ const chains = [
     chainId: BSC_CHAIN_ID,
     vaultsEndpoint: BSC_VAULTS_ENDPOINT,
     governancePool: require('../../data/governancePool.json'),
+  },
+  {
+    chainId: BSC_TEST_CHAIN_ID,
+    vaultsEndpoint: BSC_TEST_VAULTS_ENDPOINT,
+    governancePool: require('../../data/bscTest/governancePool.json'),
   }
 ];
 
