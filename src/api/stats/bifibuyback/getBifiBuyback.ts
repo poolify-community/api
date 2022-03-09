@@ -73,6 +73,7 @@ const updateBifiBuyback = async () => {
       const { url, apiToken } = etherscanApiUrlMap[chainName];
       const lp = bifiLpMap[chainName];
       const chainAddressBook = addressBook[chainName];
+      //console.log('chainAddressBook',chainAddressBook);
       const chainBIFI = chainAddressBook.tokens.BIFI;
       const chainBifiMaxi = chainAddressBook.platforms.beefyfinance.bifiMaxiStrategy;
       const prom = getBuyback(chainName, url, apiToken, chainBIFI, chainBifiMaxi, lp);

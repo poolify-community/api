@@ -28,7 +28,7 @@ const MAINNET_BSC_RPC_ENDPOINTS = [
   'https://bsc-dataseed4.binance.org',
 ];
 
-const TESTNET_BSC_RPC_ENDPOINTS = [
+const ETH_RPC_ENDPOINTS = [
   'https://data-seed-prebsc-1-s1.binance.org:8545',
   'https://data-seed-prebsc-2-s1.binance.org:8545',
   'https://data-seed-prebsc-1-s2.binance.org:8545',
@@ -42,10 +42,10 @@ const CUSTOM_BSC_RPC_ENDPOINTS = [process.env.BSC_RPC].filter(item => item);
 const BSC_RPC_ENDPOINTS = CUSTOM_BSC_RPC_ENDPOINTS.length? CUSTOM_BSC_RPC_ENDPOINTS: MAINNET_BSC_RPC_ENDPOINTS;
 
 const BSC_RPC = process.env.BSC_RPC || BSC_RPC_ENDPOINTS[0];
-const BSC_TEST_RPC = process.env.BSC_TEST_RPC || TESTNET_BSC_RPC_ENDPOINTS[0];
+const ETH_RPC = process.env.ETH_RPC || ETH_RPC_ENDPOINTS[0];
 
 const BSC_CHAIN_ID = ChainId.bsc;
-const BSC_TEST_CHAIN_ID = ChainId.bscTest;
+const ETH_CHAIN_ID = ChainId.eth;
 
 const DFYN_LPF = 0.003;
 const SUSHI_LPF = 0.003;
@@ -66,15 +66,15 @@ const BEAMSWAP_LPF = 0.0017;
 
 const MULTICHAIN_RPC: Record<ChainId, string> = {
   [ChainId.bsc]: BSC_RPC,
-  [ChainId.bscTest]: BSC_TEST_RPC
+  [ChainId.eth]: ETH_RPC
 };
 
 const BSC_VAULTS_POOLS = require('../pools/bsc');
-const BSC_TEST_VAULTS_POOLS = require('../pools/bscTest');
+const ETH_VAULTS_POOLS = require('../pools/eth');
 
 const MULTICHAIN_POOLS = {
   bsc: BSC_VAULTS_POOLS.pools,
-  bscTest : BSC_TEST_VAULTS_POOLS.pools
+  eth : ETH_VAULTS_POOLS.pools
 };
 
 const BEEFY_PERFORMANCE_FEE = 0.045;
@@ -88,9 +88,9 @@ export {
   BSC_RPC_ENDPOINTS,
   BSC_CHAIN_ID,
   BSC_VAULTS_POOLS,
-  BSC_TEST_RPC,
-  BSC_TEST_CHAIN_ID,
-  BSC_TEST_VAULTS_POOLS,
+  ETH_RPC,
+  ETH_CHAIN_ID,
+  ETH_VAULTS_POOLS,
   BASE_HPY,
   MINUTELY_HPY,
   HOURLY_HPY,

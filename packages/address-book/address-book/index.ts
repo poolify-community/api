@@ -1,5 +1,5 @@
 import { bsc } from './bsc';
-import { bscTest } from './bscTest';
+import { eth } from './eth';
 import Chain from '../types/chain';
 import { ChainId } from '../types/chainid';
 import { ConstRecord } from '../types/const';
@@ -8,18 +8,18 @@ export * from '../types/chainid';
 
 const _addressBook: {
   readonly bsc: Chain;
-  readonly bscTest: Chain;
+  readonly eth: Chain;
 } = {
   bsc,
-  bscTest
+  eth
 } as const;
 
 const _addressBookByChainId: {
   readonly '56': Chain;
-  readonly '97': Chain;
+  readonly '1': Chain;
 } = {
   [ChainId.bsc]: bsc,
-  [ChainId.bscTest]: bscTest,
+  [ChainId.eth]: eth,
 } as const;
 
 export const addressBook: ConstRecord<typeof _addressBook, Chain> = _addressBook;

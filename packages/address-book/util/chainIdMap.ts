@@ -1,6 +1,6 @@
 const chainIdMap = {
   bsc: 56,
-  bscTest: 97,
+  eth: 1,
 };
 
 export default chainIdMap;

@@ -1,8 +1,6 @@
 `use strict`;
 
 import { fetchAmmPrices } from '../../utils/fetchAmmPrices';
-import { fetchDmmPrices } from '../../utils/fetchDmmPrices';
-import { fetchMooPrices } from '../../utils/fetchMooPrices';
 import { fetchCoinGeckoPrices } from '../../utils/fetchCoinGeckoPrices';
 
 import cakeLpPools from '../../data/cakeLpPools.json';

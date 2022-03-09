@@ -2,9 +2,9 @@ const getChainTvl = require('./getChainTvl.js');
 
 const {
   BSC_CHAIN_ID,
-  BSC_TEST_CHAIN_ID,
+  ETH_CHAIN_ID,
   BSC_VAULTS_ENDPOINT,
-  BSC_TEST_VAULTS_ENDPOINT
+  ETH_VAULTS_ENDPOINT
 } = require('../../constants');
 
 const INIT_DELAY = 40 * 1000;
@@ -18,11 +18,12 @@ const chains = [
     vaultsEndpoint: BSC_VAULTS_ENDPOINT,
     governancePool: require('../../data/governancePool.json'),
   },
+  /*
   {
-    chainId: BSC_TEST_CHAIN_ID,
-    vaultsEndpoint: BSC_TEST_VAULTS_ENDPOINT,
-    governancePool: require('../../data/bscTest/governancePool.json'),
-  }
+    chainId: ETH_CHAIN_ID,
+    vaultsEndpoint: ETH_VAULTS_ENDPOINT,
+    governancePool: require('../../data/eth/governancePool.json'),
+  }*/
 ];
 
 const getTvl = () => {
@@ -40,6 +41,7 @@ const updateTvl = async () => {
     const results = await Promise.allSettled(promises);
 
     for (const result of results) {
+      console.log('result',result)
       if (result.status !== 'fulfilled') {
         console.warn('getChainTvl error', result.reason);
         continue;

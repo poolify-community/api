@@ -5,13 +5,17 @@ const { MULTICHAIN_POOLS } = require('../../constants');
 const fetchPrice = require('../../utils/fetchPrice');
 const { EXCLUDED_IDS_FROM_TVL } = require('../../constants');
 
-const BeefyVaultV6ABI = require('../../abis/BeefyVaultV6.json');
+const vaultAbi = require('../../abis/BeefyVaultV6.json');
 const { getTotalStakedInUsd } = require('../../utils/getTotalStakedInUsd');
+import { ChainId } from '../../../packages/address-book/address-book';
+
 
 const getChainTvl = async chain => {
   console.log('chain',chain);
   const chainId = chain.chainId;
-  const vaults = MULTICHAIN_POOLS[chain];
+  const chainName = ChainId[chainId];
+  const vaults = MULTICHAIN_POOLS[chainName];
+  console.log('vaults',vaults);
   const vaultBalances = await getVaultBalances(chainId, vaults);
 
   let tvls = { [chainId]: {} };
@@ -55,12 +59,13 @@ const getVaultBalances = async (chainId, vaults) => {
   const multicall = new MultiCall(web3, multicallAddress(chainId));
   const balanceCalls = [];
   vaults.forEach(vault => {
-    const vaultContract = new web3.eth.Contract(BeefyVaultV6ABI, vault.earnedTokenAddress);
+    const vaultContract = new web3.eth.Contract(vaultAbi, vault.earnedTokenAddress);
     balanceCalls.push({
       balance: vaultContract.methods.balance(),
     });
   });
   const res = await multicall.all([balanceCalls]);
+  console.log('res',res);
   return res[0].map(v => new BigNumber(v.balance));
 };
 

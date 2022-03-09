@@ -17,7 +17,7 @@ import { convertSymbolTokenMapToAddressTokenMap } from '../../util/convertSymbol
 import Chain from '../../types/chain';
 import { ConstInterface } from '../../types/const';
 
-const _bscTest = {
+const _eth = {
   platforms: {
     ape,
     chainlink,
@@ -38,4 +38,4 @@ const _bscTest = {
   tokenAddressMap: convertSymbolTokenMapToAddressTokenMap(tokens),
 };
 
-export const bscTest: ConstInterface<typeof _bscTest, Chain> = _bscTest;
+export const eth: ConstInterface<typeof _eth, Chain> = _eth;
