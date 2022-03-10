@@ -14,7 +14,10 @@ const { cakeClient } = require('../../../../apollo/client');
 import { getFarmWithTradingFeesApy } from '../../../../utils/getFarmWithTradingFeesApy';
 import { PCS_LPF } from '../../../../constants';
 
-const masterchef = '0x73feaa1eE314F8c655E354234017bE2193C9E24E';
+import { addressBook } from '../../../../address-book';
+const { bsc } = addressBook;
+
+const masterchef = bsc.platforms.pancake.masterchef; // MasterChef Contact Address
 const oracle = 'tokens';
 const oracleId = 'Cake';
 const DECIMALS = '1e18';

@@ -11,11 +11,15 @@ const gov = require('./api/stats/gov');
 const cmc = require('./api/cmc');
 const tvl = require('./api/tvl');
 const multichainVaults = require('./api/vaults');
-const { bifibuyback } = require('./api/stats/bifibuyback/index');
+//const { plfybuyback } = require('./api/stats/plfybuyback/index');
+
+
+
+/** Routers **/
 
 router.get('/apy', stats.apy);
 router.get('/apy/breakdown', stats.apyBreakdowns);
-router.get('/bifibuyback', bifibuyback);
+//router.get('/plfybuyback', plfybuyback);
 
 router.get('/tvl', tvl.vaultTvl);
 router.get('/cmc', cmc.vaults);

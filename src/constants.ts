@@ -1,4 +1,4 @@
-import { ChainId } from '../packages/address-book/address-book';
+import {ChainId,ChainIdReverse,addressBook} from './address-book';
 
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3001';
 
@@ -28,16 +28,12 @@ const MAINNET_BSC_RPC_ENDPOINTS = [
   'https://bsc-dataseed4.binance.org',
 ];
 
-const ETH_RPC_ENDPOINTS = [
-  'https://data-seed-prebsc-1-s1.binance.org:8545',
-  'https://data-seed-prebsc-2-s1.binance.org:8545',
-  'https://data-seed-prebsc-1-s2.binance.org:8545',
-  'https://data-seed-prebsc-2-s2.binance.org:8545',
-  'https://data-seed-prebsc-1-s3.binance.org:8545',
-  'https://data-seed-prebsc-2-s3.binance.org:8545'
-];
+const ETH_RPC_ENDPOINTS = [];
 
-const CUSTOM_BSC_RPC_ENDPOINTS = [process.env.BSC_RPC].filter(item => item);
+/** This is used for the BSC TEST NET, remove later **/
+const CUSTOM_BSC_RPC_ENDPOINTS = [
+  'https://data-seed-prebsc-1-s1.binance.org:8545/'
+];
 
 const BSC_RPC_ENDPOINTS = CUSTOM_BSC_RPC_ENDPOINTS.length? CUSTOM_BSC_RPC_ENDPOINTS: MAINNET_BSC_RPC_ENDPOINTS;
 
@@ -64,31 +60,40 @@ const PANGOLIN_LPF = 0.003;
 const TETHYS_LPF = 0.002;
 const BEAMSWAP_LPF = 0.0017;
 
-const MULTICHAIN_RPC: Record<ChainId, string> = {
-  [ChainId.bsc]: BSC_RPC,
-  [ChainId.eth]: ETH_RPC
-};
-
-const BSC_VAULTS_POOLS = require('../pools/bsc');
-const ETH_VAULTS_POOLS = require('../pools/eth');
-
-const MULTICHAIN_POOLS = {
-  bsc: BSC_VAULTS_POOLS.pools,
-  eth : ETH_VAULTS_POOLS.pools
-};
-
 const BEEFY_PERFORMANCE_FEE = 0.045;
 const SHARE_AFTER_PERFORMANCE_FEE = 1 - BEEFY_PERFORMANCE_FEE;
 
 const EXCLUDED_IDS_FROM_TVL = ['venus-wbnb'];
 
+const BSC_VAULTS_POOLS = require('../pools/bsc');
+const ETH_VAULTS_POOLS = require('../pools/eth');
+
+/** ETH Not Supported YET */
+
+const MULTICHAIN_RPC = {
+  [ChainId.bsc]: BSC_RPC,
+  //[ChainId.eth]: ETH_RPC
+};
+
+const MULTICHAIN_POOLS = {
+  bsc: BSC_VAULTS_POOLS.pools,
+  //eth : ETH_VAULTS_POOLS.pools
+};
+
+const MULTICALL_PRICEMULTI = {
+  97 : '0xAD9a03422392811A134EA5563F6C27e8F6C08ffc',
+}
+
+
 export {
+  MULTICALL_PRICEMULTI,
   API_BASE_URL,
   BSC_RPC,
   BSC_RPC_ENDPOINTS,
   BSC_CHAIN_ID,
   BSC_VAULTS_POOLS,
   ETH_RPC,
+  ETH_RPC_ENDPOINTS,
   ETH_CHAIN_ID,
   ETH_VAULTS_POOLS,
   BASE_HPY,

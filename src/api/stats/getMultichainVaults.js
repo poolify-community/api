@@ -23,7 +23,7 @@ const updateMultichainVaults = async () => {
   try {
     for (let chain in MULTICHAIN_POOLS) {
       
-      //console.log('MULTICHAIN_POOLS',MULTICHAIN_POOLS);
+      /** This is checking every vault, even if they don't contain "last Harvest" ==> see StrategyCommonChefLP.sol  */
       let chainVaults = MULTICHAIN_POOLS[chain];
           chainVaults = await getStrategies(chainVaults, chain);
           chainVaults = await getLastHarvests(chainVaults, chain);

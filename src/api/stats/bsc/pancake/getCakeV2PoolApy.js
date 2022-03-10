@@ -8,9 +8,13 @@ const { compound } = require('../../../../utils/compound');
 const { BASE_HPY, BSC_CHAIN_ID } = require('../../../../constants');
 const getBlockNumber = require('../../../../utils/getBlockNumber');
 
+import { addressBook } from '../../../../address-book';
+
+const { bsc } = addressBook;
+
 const getCakeV2PoolApy = async () => {
-  const masterChef = '0x73feaa1eE314F8c655E354234017bE2193C9E24E';
-  const cake = '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82';
+  const masterChef = bsc.platforms.pancake.masterchef;
+  const cake = bsc.tokens.CAKE;
   const oracle = 'tokens';
   const oracleId = 'Cake';
 

@@ -1,10 +1,10 @@
 {
-  "name": "beefy-api",
+  "name": "poolify-api",
   "version": "1.0.0",
   "repository": "poolifyfinance/poolify-api",
   "license": "MIT",
   "scripts": {
-    "install-all": "yarn && cd packages/address-book && yarn",
+    "install-all": "yarn",
     "start": "ts-node src/app.ts",
     "dev": "nodemon -e js,ts,json src/app.ts",
     "test": "nyc ava",
@@ -12,13 +12,7 @@
     "prettier:fix": "prettier --write src/**/*",
     "prepare": "husky install",
     "addFarm": "ts-node scripts/add-farm.ts",
-    "bsc:pancake:add": "ts-node scripts/add-farm.ts --network bsc --project pancake",
-    "bsc:wault:add": "ts-node scripts/add-farm.ts --network bsc --project wault",
-    "bsc:mdex:add": "ts-node scripts/add-farm.ts --network bsc --project mdex",
-    "bsc:ape:add": "ts-node scripts/add-farm.ts --network bsc --project ape",
-    "bsc:biswap:add": "ts-node scripts/add-farm.ts --network bsc --project biswap",
-    "bsc:omni:add": "ts-node scripts/add-omni.ts --network bsc --project omni",
-    "gen-abi-types": "abi-types-generator ./src/abis/matic/Telxchange/StakingRewards/StakingRewards.json --output='./src/abis/matic/Telxchange/StakingRewards/types'"
+    "bsc:pancake:add": "ts-node scripts/add-farm.ts --network bsc --project pancake"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",

@@ -2,21 +2,18 @@
 const getCakeApys = require('./pancake/getCakeApys');
 const getCakePoolApy = require('./pancake/getCakePoolApy');
 const { getCakeLpApys } = require('./pancake/getCakeLpApys');
-const getMdexBscLpApys = require('./mdex/getMdexBscLpApys');
-const getMdexMdxApy = require('./mdex/getMdexMdxApy');
 const getCakeV2PoolApy = require('./pancake/getCakeV2PoolApy');
-const getBifiMaxiApy = require('./beefy/getBifiMaxiApy');
-const getBifiMaxiV2Apy = require('./beefy/getBifiMaxiV2Apy');
-const getBifiGovApy = require('./beefy/getBifiGovApy');
+const getPLFYMaxiApy = require('./poolify/getPLFYMaxiApy');
+const getPLFYMaxiV2Apy = require('./poolify/getPLFYMaxiV2Apy');
+const getPLFYGovApy = require('./poolify/getPLFYGovApy');
 
 const getApys = [
-  getBifiGovApy,
-  getBifiMaxiApy,
-  getBifiMaxiV2Apy,
+  getPLFYGovApy,
+  getPLFYMaxiApy,
+  getPLFYMaxiV2Apy,
   getCakeApys,
   getCakePoolApy,
   getCakeV2PoolApy,
-  getMdexMdxApy,
 ];
 // ^^ APYs are sorted alphabetically
 

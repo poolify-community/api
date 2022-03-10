@@ -5,9 +5,6 @@ import { fetchCoinGeckoPrices } from '../../utils/fetchCoinGeckoPrices';
 
 import cakeLpPools from '../../data/cakeLpPools.json';
 import cakeLpV1Pools from '../../data/cakeLpV1Pools.json';
-import inchPools from '../../data/1inchLpPools.json';
-import mdexBscPools from '../../data/mdexBscLpPools.json';
-import mooTokens from '../../data/mooTokens.json';
 
 const INIT_DELAY = 0 * 60 * 1000;
 const REFRESH_INTERVAL = 5 * 60 * 1000;
@@ -15,8 +12,6 @@ const REFRESH_INTERVAL = 5 * 60 * 1000;
 // FIXME: if this list grows too big we might hit the ratelimit on initialization everytime
 // Implement in case of emergency -> https://github.com/beefyfinance/beefy-api/issues/103
 const pools = [
-  ...mdexBscPools,
-  ...inchPools,
   ...cakeLpV1Pools,
   ...cakeLpPools,
 ];
@@ -51,7 +46,7 @@ const updateAmmPrices = async () => {
   try {
     const coinGeckoPrices = fetchCoinGeckoPrices(coinGeckoCoins);
     const ammPrices = fetchAmmPrices(pools, knownPrices);
-
+    
     const tokenPrices = ammPrices.then(async ({ _, tokenPrices }) => {
       return {
         ...tokenPrices,

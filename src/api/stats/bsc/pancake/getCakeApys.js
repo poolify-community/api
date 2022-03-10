@@ -9,6 +9,10 @@ const { compound } = require('../../../../utils/compound');
 const { HOURLY_HPY, BSC_CHAIN_ID } = require('../../../../constants');
 const getBlockNumber = require('../../../../utils/getBlockNumber');
 
+import { addressBook } from '../../../../address-book';
+
+const { bsc } = addressBook;
+
 const getCakeApys = async () => {
   let apys = {};
 
@@ -28,7 +32,7 @@ const getPoolApy = async pool => {
     getYearlyRewardsInUsd(pool.smartChef, pool.oracle, pool.oracleId, pool.decimals),
     getTotalStakedInUsd(
       pool.smartChef,
-      '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+      bsc.tokens.CAKE, // CAKE Token Address
       'tokens',
       'Cake'
     ),

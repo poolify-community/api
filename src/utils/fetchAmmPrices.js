@@ -1,11 +1,8 @@
 const BigNumber = require('bignumber.js');
 const { ethers } = require('ethers');
-const { MULTICHAIN_RPC } = require('../constants');
+const { MULTICHAIN_RPC,MULTICALL_PRICEMULTI } = require('../constants');
+const { web3Factory,multicallAddress } = require('../utils/web3');
 
-const MULTICALLS = {
-  56: '0xbcf79F67c2d93AD5fd1b919ac4F5613c493ca34F',
-  97: '0xAD9a03422392811A134EA5563F6C27e8F6C08ffc'
-};
 
 const MulticallAbi = require('../abis/PoolifyPriceMulticall.json');
 const ERC20 = require('../abis/common/ERC20/ERC20.json');
@@ -42,21 +39,24 @@ const fetchAmmPrices = async (pools, knownPrices) => {
   let prices = { ...knownPrices };
   let lps = {};
   let weights = {};
+
   Object.keys(knownPrices).forEach(known => {
     weights[known] = Number.MAX_SAFE_INTEGER;
   });
 
-  for (let chain in MULTICALLS) {
-    let filtered = pools.filter(p => p.chainId == chain);
+  for (let chainId in MULTICALL_PRICEMULTI) {
+    let filtered = pools.filter(p => p.chainId == chainId);
 
     // Old BSC pools don't have the chainId attr
-    if (chain == '56') {
+    if (chainId == '56') {
       filtered = pools.filter(p => p.chainId === undefined).concat(filtered);
     }
 
     // Setup multichain
-    const provider = new ethers.providers.JsonRpcProvider(MULTICHAIN_RPC[chain]);
-    const multicall = new ethers.Contract(MULTICALLS[chain], MulticallAbi, provider);
+    console.log('\x1b[33m%s\x1b[0m',`--> JSON RPC Provider for chain ${chainId} :  ${MULTICHAIN_RPC[chainId]}`);
+
+    const provider = new ethers.providers.JsonRpcProvider(MULTICHAIN_RPC[chainId]);
+    const multicall = new ethers.Contract(MULTICALL_PRICEMULTI[chainId], MulticallAbi, provider);
 
     // Split query in batches
     const query = filtered.map(p => [p.address, p.lp0.address, p.lp1.address]);
@@ -66,7 +66,7 @@ const fetchAmmPrices = async (pools, knownPrices) => {
       try {
         buf = await multicall.getLpInfo(batch);
       } catch (e) {
-        console.error('fetchAmmPrices', e);
+        console.error('[error]fetchAmmPrices', e);
       }
 
       // Merge fetched data
@@ -93,7 +93,7 @@ const fetchAmmPrices = async (pools, knownPrices) => {
           knownToken = pool.lp1;
           unknownToken = pool.lp0;
         } else {
-          console.log('unsolved: ', pool.lp0.oracleId, pool.lp1.oracleId, pool.name);
+          //console.log('unsolved: ', pool.lp0.oracleId, pool.lp1.oracleId, pool.name);
           continue;
         }
 
