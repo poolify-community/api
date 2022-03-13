@@ -1,18 +1,19 @@
 
-const getCakeApys = require('./pancake/getCakeApys');
-const getCakePoolApy = require('./pancake/getCakePoolApy');
+//const getCakeApys = require('./pancake/getCakeApys');
+//const getCakePoolApy = require('./pancake/getCakePoolApy');
 const { getCakeLpApys } = require('./pancake/getCakeLpApys');
 const getCakeV2PoolApy = require('./pancake/getCakeV2PoolApy');
-const getPLFYMaxiApy = require('./poolify/getPLFYMaxiApy');
-const getPLFYMaxiV2Apy = require('./poolify/getPLFYMaxiV2Apy');
-const getPLFYGovApy = require('./poolify/getPLFYGovApy');
+//const getPLFYMaxiApy = require('./poolify/getPLFYMaxiApy');
+//const getPLFYMaxiV2Apy = require('./poolify/getPLFYMaxiV2Apy');
+//const getPLFYGovApy = require('./poolify/getPLFYGovApy');
 
 const getApys = [
-  getPLFYGovApy,
-  getPLFYMaxiApy,
-  getPLFYMaxiV2Apy,
-  getCakeApys,
-  getCakePoolApy,
+  //getPLFYGovApy,
+  //getPLFYMaxiApy,
+  //getPLFYMaxiV2Apy,
+  //getCakeApys,
+  //getCakePoolApy,
+  getCakeLpApys,
   getCakeV2PoolApy,
 ];
 // ^^ APYs are sorted alphabetically
@@ -54,6 +55,8 @@ const getBSCApys = async () => {
 
     apyBreakdowns = { ...apyBreakdowns, ...mappedApyBreakdownValues };
   }
+
+  console.log('apys',apys);
 
   return {
     apys,

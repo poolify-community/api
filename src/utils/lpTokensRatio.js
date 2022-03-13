@@ -1,8 +1,9 @@
 const BigNumber = require('bignumber.js');
 const { web3Factory } = require('./web3');
 const LPPair = require('../abis/LPPair.json');
+const { BSC_CHAIN_ID } = require('../constants');
 
-const lpTokenRatio = async (lpTokenAddress, decimals0, decimals1, chainId = 56) => {
+const lpTokenRatio = async (lpTokenAddress, decimals0, decimals1, chainId = BSC_CHAIN_ID) => {
   const web3 = web3Factory(chainId);
 
   const tokenPairContract = new web3.eth.Contract(LPPair, lpTokenAddress);

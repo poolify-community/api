@@ -17,7 +17,7 @@ import { PCS_LPF } from '../../../../constants';
 import { addressBook } from '../../../../address-book';
 const { bsc } = addressBook;
 
-const masterchef = bsc.platforms.pancake.masterchef; // MasterChef Contact Address
+const masterchef = bsc.platforms.pancake.masterchef.address; // MasterChef Contact Address
 const oracle = 'tokens';
 const oracleId = 'Cake';
 const DECIMALS = '1e18';

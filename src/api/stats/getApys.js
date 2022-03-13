@@ -18,15 +18,17 @@ const updateApys = async () => {
 
   try {
     const results = await Promise.allSettled([
-      getBSCApys
+      getBSCApys()
     ]);
+    console.log('results APY calls',results);
 
     for (const result of results) {
       if (result.status !== 'fulfilled') {
         console.warn('getApys error', result.reason);
         continue;
       }
-
+      
+      
       // Set default APY values
       let mappedApyValues = result.value;
       let mappedApyBreakdownValues = {};
@@ -50,7 +52,7 @@ const updateApys = async () => {
 
       apyBreakdowns = { ...apyBreakdowns, ...mappedApyBreakdownValues };
     }
-
+    console.log('apys 2',apys);
     console.log('> updated apys');
   } catch (err) {
     console.error('> apy initialization failed', err);

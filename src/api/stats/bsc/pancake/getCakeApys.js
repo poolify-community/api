@@ -32,7 +32,7 @@ const getPoolApy = async pool => {
     getYearlyRewardsInUsd(pool.smartChef, pool.oracle, pool.oracleId, pool.decimals),
     getTotalStakedInUsd(
       pool.smartChef,
-      bsc.tokens.CAKE, // CAKE Token Address
+      bsc.tokens.CAKE.address, // CAKE Token Address
       'tokens',
       'Cake'
     ),

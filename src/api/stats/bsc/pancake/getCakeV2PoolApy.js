@@ -13,8 +13,8 @@ import { addressBook } from '../../../../address-book';
 const { bsc } = addressBook;
 
 const getCakeV2PoolApy = async () => {
-  const masterChef = bsc.platforms.pancake.masterchef;
-  const cake = bsc.tokens.CAKE;
+  const masterChef = bsc.platforms.pancake.masterchef.address;
+  const cake = bsc.tokens.CAKE.address;
   const oracle = 'tokens';
   const oracleId = 'Cake';
 
