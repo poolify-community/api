@@ -42,13 +42,13 @@ let lpPricesCache: Promise<any>;
 const updateAmmPrices = async () => {
   console.log('> updating amm prices');
   try {
-    const coinGeckoPrices = fetchCoinGeckoPrices(coinGeckoCoins);
+    //const coinGeckoPrices = fetchCoinGeckoPrices(coinGeckoCoins);
     const ammPrices = fetchAmmPrices(pools, knownPrices);
     
     const tokenPrices = ammPrices.then(async ({ _, tokenPrices }) => {
       return {
         ...tokenPrices,
-        ...(await coinGeckoPrices),
+        //...(await coinGeckoPrices),
       };
     });
 
