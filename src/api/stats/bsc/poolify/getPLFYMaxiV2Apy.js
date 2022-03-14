@@ -1,39 +1,66 @@
 const BigNumber = require('bignumber.js');
 const { bscWeb3: web3 } = require('../../../../utils/web3');
 
-const IRewardPool = require('../../../../abis/IRewardPool.json');
+const RewardManager_ABI = require('../../../../abis/PoolifyRewardManager.json');
 const fetchPrice = require('../../../../utils/fetchPrice');
 const { getTotalStakedInUsd } = require('../../../../utils/getTotalStakedInUsd');
 const { compound } = require('../../../../utils/compound');
-const { DAILY_HPY } = require('../../../../constants');
+const { DAILY_HPY,BSC_CHAIN_ID } = require('../../../../constants');
+const getBlockNumber = require('../../../../utils/getBlockNumber');
 
-const BIFI = '0xCa3F508B8e4Dd382eE878A314789373D80A5190A';
-const REWARDS = '0x453D4Ba9a2D594314DF88564248497F7D74d6b2C';
+
+const BIFI = '0xCCa640c3AC0DaE0F66bDf25C3049992B82B7dE1c';
+const REWARDS_MANAGER = '0x0cF8B032031e4D96b7b628aa9054379Ede9076e5';
 const ORACLE = 'tokens';
-const ORACLE_ID = 'BIFI';
-const DECIMALS = '1e18';
-const BLOCKS_PER_DAY = 28800;
+const ORACLE_ID = 'PLFY';
 
 const getBifiMaxiV2Apy = async () => {
+
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
-    getYearlyRewardsInUsd(),
-    getTotalStakedInUsd(REWARDS, BIFI, ORACLE, ORACLE_ID, DECIMALS),
+    getYearlyRewardsInUsd(REWARDS_MANAGER, ORACLE, ORACLE_ID),
+    getTotalStakedInUsd(REWARDS_MANAGER, BIFI, ORACLE, ORACLE_ID)
   ]);
 
   const simpleApy = yearlyRewardsInUsd.dividedBy(totalStakedInUsd);
   const apy = compound(simpleApy, DAILY_HPY, 1, 1);
 
-  return { 'bifi-maxi-v2': apy };
+  return { 'plfy-maxi-v2': apy };
 };
 
-const getYearlyRewardsInUsd = async () => {
-  const bnbPrice = await fetchPrice({ oracle: 'tokens', id: 'WBNB' });
+const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) => {
+  const fromBlock = await getBlockNumber(BSC_CHAIN_ID);
+  const toBlock = fromBlock + 1;
+  //console.log('RewardManager_ABI',RewardManager_ABI);
+  const _rewardManagerContract = new web3.eth.Contract(RewardManager_ABI, rewardsManagerAddress);
 
-  const rewardPool = new web3.eth.Contract(IRewardPool, REWARDS);
-  const rewardRate = new BigNumber(await rewardPool.methods.rewardRate().call());
-  const yearlyRewards = rewardRate.times(3).times(BLOCKS_PER_DAY).times(365);
-  const yearlyRewardsInUsd = yearlyRewards.times(bnbPrice).dividedBy(DECIMALS);
+  const multiplier = new BigNumber(
+    await _rewardManagerContract.methods.getMultiplier(fromBlock, toBlock).call()
+  );
+  const blockRewards = new BigNumber(await _rewardManagerContract.methods.poolifyPerBlock().call());
+  console.log('blockRewards',blockRewards.toFormat());
+  let { allocPoint } = await _rewardManagerContract.methods.poolInfo(0).call();
+        allocPoint = new BigNumber(allocPoint);
 
+  const totalAllocPoint = new BigNumber('1000'); //await _rewardManagerContract.methods.totalAllocPoint.call()
+  /*
+    THIS IS MISSING, dont forget to set "totalAllocPoint" as public in the  PoolifyRewardManager. So for now it's hardcoded
+  */
+
+  console.log('totalAllocPoint',totalAllocPoint.toFormat());
+  const poolBlockRewards = blockRewards
+    .times(multiplier)
+    .times(allocPoint)
+    .dividedBy(totalAllocPoint);
+
+  const secondsPerBlock = 3;
+  const secondsPerYear = 31536000;
+  const yearlyRewards = poolBlockRewards.dividedBy(secondsPerBlock).times(secondsPerYear);
+
+  const plfyPrice = await fetchPrice({ oracle, id: oracleId });
+  const yearlyRewardsInUsd = yearlyRewards.times(plfyPrice).dividedBy('1e18');
+  console.log('--> plfyPrice',plfyPrice);
+  console.log('--> yearlyRewards',yearlyRewards.dividedBy('1e18').toFormat());
+  console.log('--> yearlyRewardsInUsd',yearlyRewardsInUsd.toFormat());
   return yearlyRewardsInUsd;
 };
 

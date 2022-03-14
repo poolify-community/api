@@ -4,17 +4,17 @@
 const { getCakeLpApys } = require('./pancake/getCakeLpApys');
 const getCakeV2PoolApy = require('./pancake/getCakeV2PoolApy');
 //const getPLFYMaxiApy = require('./poolify/getPLFYMaxiApy');
-//const getPLFYMaxiV2Apy = require('./poolify/getPLFYMaxiV2Apy');
+const getPLFYMaxiV2Apy = require('./poolify/getPLFYMaxiV2Apy');
 //const getPLFYGovApy = require('./poolify/getPLFYGovApy');
 
 const getApys = [
   //getPLFYGovApy,
   //getPLFYMaxiApy,
-  //getPLFYMaxiV2Apy,
+  getPLFYMaxiV2Apy,
   //getCakeApys,
   //getCakePoolApy,
-  getCakeLpApys,
-  getCakeV2PoolApy,
+  //getCakeLpApys,
+  //getCakeV2PoolApy,
 ];
 // ^^ APYs are sorted alphabetically
 
