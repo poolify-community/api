@@ -14,7 +14,7 @@ const REWARDS_MANAGER = '0x0cF8B032031e4D96b7b628aa9054379Ede9076e5';
 const ORACLE = 'tokens';
 const ORACLE_ID = 'PLFY';
 
-const getBifiMaxiV2Apy = async () => {
+const getPLFYMaxiV2Apy = async () => {
 
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
     getYearlyRewardsInUsd(REWARDS_MANAGER, ORACLE, ORACLE_ID),
@@ -22,6 +22,7 @@ const getBifiMaxiV2Apy = async () => {
   ]);
 
   const simpleApy = yearlyRewardsInUsd.dividedBy(totalStakedInUsd);
+
   const apy = compound(simpleApy, DAILY_HPY, 1, 1);
 
   return { 'plfy-maxi-v2': apy };
@@ -36,7 +37,7 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
   const multiplier = new BigNumber(
     await _rewardManagerContract.methods.getMultiplier(fromBlock, toBlock).call()
   );
-  const blockRewards = new BigNumber(await _rewardManagerContract.methods.poolifyPerBlock().call());
+  const blockRewards = new BigNumber(await _rewardManagerContract.methods.poolifyPerBlock().call()).dividedBy('1e18');
   console.log('blockRewards',blockRewards.toFormat());
   let { allocPoint } = await _rewardManagerContract.methods.poolInfo(0).call();
         allocPoint = new BigNumber(allocPoint);
@@ -46,7 +47,6 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
     THIS IS MISSING, dont forget to set "totalAllocPoint" as public in the  PoolifyRewardManager. So for now it's hardcoded
   */
 
-  console.log('totalAllocPoint',totalAllocPoint.toFormat());
   const poolBlockRewards = blockRewards
     .times(multiplier)
     .times(allocPoint)
@@ -57,11 +57,9 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
   const yearlyRewards = poolBlockRewards.dividedBy(secondsPerBlock).times(secondsPerYear);
 
   const plfyPrice = await fetchPrice({ oracle, id: oracleId });
-  const yearlyRewardsInUsd = yearlyRewards.times(plfyPrice).dividedBy('1e18');
-  console.log('--> plfyPrice',plfyPrice);
-  console.log('--> yearlyRewards',yearlyRewards.dividedBy('1e18').toFormat());
-  console.log('--> yearlyRewardsInUsd',yearlyRewardsInUsd.toFormat());
+  const yearlyRewardsInUsd = yearlyRewards.times(new BigNumber(plfyPrice)).dividedBy('1e18');
+  
   return yearlyRewardsInUsd;
 };
 
-module.exports = getBifiMaxiV2Apy;
+module.exports = getPLFYMaxiV2Apy;
