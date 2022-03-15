@@ -18,7 +18,7 @@ const multichainVaults = require('./api/vaults');
 /** Routers **/
 
 router.get('/apy', stats.apy);
-//router.get('/apy/breakdown', stats.apyBreakdowns);
+router.get('/apy/breakdown', stats.apyBreakdowns);
 //router.get('/plfybuyback', plfybuyback);
 
 router.get('/tvl', tvl.vaultTvl);
