@@ -37,7 +37,7 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
   const multiplier = new BigNumber(
     await _rewardManagerContract.methods.getMultiplier(fromBlock, toBlock).call()
   );
-  const blockRewards = new BigNumber(await _rewardManagerContract.methods.poolifyPerBlock().call()).dividedBy('1e18');
+  const blockRewards = new BigNumber(await _rewardManagerContract.methods.poolifyPerBlock().call());
   console.log('blockRewards',blockRewards.toFormat());
   let { allocPoint } = await _rewardManagerContract.methods.poolInfo(0).call();
         allocPoint = new BigNumber(allocPoint);
@@ -58,7 +58,7 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
 
   const plfyPrice = await fetchPrice({ oracle, id: oracleId });
   const yearlyRewardsInUsd = yearlyRewards.times(new BigNumber(plfyPrice)).dividedBy('1e18');
-  
+
   return yearlyRewardsInUsd;
 };
 
