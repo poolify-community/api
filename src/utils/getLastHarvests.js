@@ -21,6 +21,7 @@ const getLastHarvests = async (vaults, chain) => {
     const harvestCalls = [];
     let batch = query.slice(i, i + BATCH_SIZE);
         batch.forEach((strategyAddress,index) => {
+          //console.log('strategyAddress',strategyAddress);
             const strategyContract = new web3.eth.Contract(strategyAbi, strategyAddress);
             harvestCalls.push({
               harvest: strategyAddress?strategyContract.methods.lastHarvest():'',
@@ -28,7 +29,8 @@ const getLastHarvests = async (vaults, chain) => {
         });
     const res = await multicall.all([harvestCalls],{traditional:true});
     const harvests = res[0].map(v => v.harvest);
-
+  
+    //console.log('harvests',harvests);
     // Merge fetched data
     batch.forEach((_,index) => {
       vaults[index + i].lastHarvest = harvests[index] ? parseInt(harvests[index]) : 0;

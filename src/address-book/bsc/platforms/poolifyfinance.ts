@@ -3,7 +3,7 @@ export const poolifyfinance = {
   vaultOwner: '',  // Instance of timelock contract
   treasurer: '',// Treasurer wallet
   devMultisig: '', // Instance of GnosisSafeProxy (multi sig wallet)
-  rewardPool: '0x7BB2DEe8bF04F811525d00e2bF694dD1D29F0a62', // Poolify Reward Manager
+  rewardManager: '0x0cF8B032031e4D96b7b628aa9054379Ede9076e5', // Poolify Reward Manager
   treasury: '', // Treasury contract
   gasPrice: '', // Gas price contract
   multicall: '0xd5Cd02c90d9DeddffC457763fAe7bA77857D5975', // Multicall contract

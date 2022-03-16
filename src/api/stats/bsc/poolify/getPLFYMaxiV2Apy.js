@@ -8,9 +8,12 @@ const { compound } = require('../../../../utils/compound');
 const { DAILY_HPY,BSC_CHAIN_ID } = require('../../../../constants');
 const getBlockNumber = require('../../../../utils/getBlockNumber');
 
+import { addressBook } from '../../../../address-book';
 
-const BIFI = '0xCCa640c3AC0DaE0F66bDf25C3049992B82B7dE1c';
-const REWARDS_MANAGER = '0x0cF8B032031e4D96b7b628aa9054379Ede9076e5';
+const { bsc } = addressBook;
+
+const PLFY = bsc.tokens.PLFY;
+const REWARDS_MANAGER = bsc.platforms.poolifyfinance.rewardManager;
 const ORACLE = 'tokens';
 const ORACLE_ID = 'PLFY';
 
@@ -18,7 +21,7 @@ const getPLFYMaxiV2Apy = async () => {
 
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
     getYearlyRewardsInUsd(REWARDS_MANAGER, ORACLE, ORACLE_ID),
-    getTotalStakedInUsd(REWARDS_MANAGER, BIFI, ORACLE, ORACLE_ID)
+    getTotalStakedInUsd(REWARDS_MANAGER, PLFY, ORACLE, ORACLE_ID)
   ]);
 
   const simpleApy = yearlyRewardsInUsd.dividedBy(totalStakedInUsd);
@@ -58,7 +61,7 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
 
   const plfyPrice = await fetchPrice({ oracle, id: oracleId });
   const yearlyRewardsInUsd = yearlyRewards.times(new BigNumber(plfyPrice)).dividedBy('1e18');
-
+  console.log('yearlyRewardsInUsd',yearlyRewardsInUsd);
   return yearlyRewardsInUsd;
 };
 

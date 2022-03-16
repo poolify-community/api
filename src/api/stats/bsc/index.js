@@ -56,8 +56,6 @@ const getBSCApys = async () => {
     apyBreakdowns = { ...apyBreakdowns, ...mappedApyBreakdownValues };
   }
 
-  console.log('apys',apys);
-
   return {
     apys,
     apyBreakdowns,

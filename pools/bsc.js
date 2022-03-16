@@ -31,7 +31,8 @@ export const pools = [
       vaultToken:"bucketPLFY",
       vaultTokenAddress: "0x95EAF0156C05df0fE83859e466ea8877090ac898",
       vaultContractAddress: "0x95EAF0156C05df0fE83859e466ea8877090ac898",
-      vaultExplorer: "https://testnet.bscscan.com/0x95EAF0156C05df0fE83859e466ea8877090ac898"
+      vaultExplorer: "https://testnet.bscscan.com/0x95EAF0156C05df0fE83859e466ea8877090ac898",
+      rewardManagerPoolIndex:0 // for the pending PLFY
   },
 
   {
@@ -66,6 +67,7 @@ export const pools = [
     vaultToken:"bucketCakeV2PLFY-BNB",
     vaultTokenAddress: null,
     vaultContractAddress: null,
-    vaultExplorer: "https://testnet.bscscan.com/null"
+    vaultExplorer: "https://testnet.bscscan.com/null",
+    rewardManagerPoolIndex:null // for the pending PLFY
   },
 ];
