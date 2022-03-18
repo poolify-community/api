@@ -29,7 +29,7 @@ export const tokens = {
   PLFY: {
     name: 'Poolify Token',
     symbol: 'PLFY',
-    address: '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+    address: '0xCCa640c3AC0DaE0F66bDf25C3049992B82B7dE1c',
     chainId: Chain.bsc,
     decimals: 18,
     website: 'https://poolify.finance/',

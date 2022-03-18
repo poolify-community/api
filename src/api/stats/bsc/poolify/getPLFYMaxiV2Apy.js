@@ -12,7 +12,7 @@ import { addressBook } from '../../../../address-book';
 
 const { bsc } = addressBook;
 
-const PLFY = bsc.tokens.PLFY;
+const PLFY = bsc.tokens.PLFY.address;
 const REWARDS_MANAGER = bsc.platforms.poolifyfinance.rewardManager;
 const ORACLE = 'tokens';
 const ORACLE_ID = 'PLFY';
@@ -41,11 +41,10 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
     await _rewardManagerContract.methods.getMultiplier(fromBlock, toBlock).call()
   );
   const blockRewards = new BigNumber(await _rewardManagerContract.methods.poolifyPerBlock().call());
-  console.log('blockRewards',blockRewards.toFormat());
   let { allocPoint } = await _rewardManagerContract.methods.poolInfo(0).call();
         allocPoint = new BigNumber(allocPoint);
 
-  const totalAllocPoint = new BigNumber('1000'); //await _rewardManagerContract.methods.totalAllocPoint.call()
+  const totalAllocPoint = new BigNumber(await _rewardManagerContract.methods.totalAllocPoint().call());
   /*
     THIS IS MISSING, dont forget to set "totalAllocPoint" as public in the  PoolifyRewardManager. So for now it's hardcoded
   */
@@ -61,7 +60,6 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
 
   const plfyPrice = await fetchPrice({ oracle, id: oracleId });
   const yearlyRewardsInUsd = yearlyRewards.times(new BigNumber(plfyPrice)).dividedBy('1e18');
-  console.log('yearlyRewardsInUsd',yearlyRewardsInUsd);
   return yearlyRewardsInUsd;
 };
 

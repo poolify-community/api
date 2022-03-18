@@ -14,8 +14,8 @@ const getTotalStakedInUsd = async (
   chainId = BSC_CHAIN_ID
 ) => {
   const web3 = web3Factory(chainId);
-  //console.log('tokenAddr',tokenAddr);
-  //console.log('targetAddr',targetAddr);
+  console.log('tokenAddr',tokenAddr);
+  console.log('targetAddr',targetAddr);
   const tokenContract = new web3.eth.Contract(ERC20, tokenAddr);
   const totalStaked = new BigNumber(await tokenContract.methods.balanceOf(targetAddr).call());
   const tokenPrice = await fetchPrice({ oracle, id: oracleId });
