@@ -3,9 +3,12 @@ const { MultiCall } = require('eth-multicall');
 const { web3Factory, multicallAddress } = require('../../utils/web3');
 const { MULTICHAIN_POOLS } = require('../../constants');
 const { getStrategies } = require('../../utils/getStrategies.js');
-
+const getBlockNumber = require('../../utils/getBlockNumber');
 const RewardManager_ABI = require('../../abis/PoolifyRewardManager.json');
-
+const Strategy_ABI = require('../../abis/common/Strategy/StrategyPLFY.json');
+const StrategyLiquidity_ABI = require('../../abis/common/Strategy/StrategyPLFYLiquidity.json');
+import Web3 from 'web3';
+const MasterChef = require('../../abis/MasterChef.json');
 import {ChainIdReverse,addressBook} from '../../address-book';
 
 const { bsc } = addressBook;
@@ -31,18 +34,15 @@ const getVaultPendingPLFY = async (chainId, vaults) => {
   const pendingCalls = [];
   vaults = await getStrategies(vaults,ChainIdReverse[chainId]);
 
-  const rewardManagerContract = new web3.eth.Contract(RewardManager_ABI,REWARDS_MANAGER);
-  
-
-
   vaults.forEach((vault,index) => {
-    const rewardManagerContract = new web3.eth.Contract(RewardManager_ABI,REWARDS_MANAGER);
-    console.log('config',vault.rewardManagerPoolIndex != null,vault.strategy);
+    //console.log('vault',vault);
+    console.log('config',vault.rewardManagerPoolIndex,vault.strategy,REWARDS_MANAGER);
     pendingCalls.push({
-      pendingReward: (vault.rewardManagerPoolIndex != null)?rewardManagerContract.methods.pendingPoolify(vault.rewardManagerPoolIndex,vault.strategy):'0.0', //rewardManagerPoolIndex
+      pendingReward: rewardManagerContract.methods.pendingPoolify(vault.rewardManagerPoolIndex,vault.strategy), //rewardManagerPoolIndex
       position: index.toString()
     });
   });
+
   
   const res = await multicall.all([pendingCalls],{traditional:true});
   let result = {};
