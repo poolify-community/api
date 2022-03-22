@@ -38,7 +38,7 @@ export const pools = [
       tokenB:null,//TokenSymbol.BNB,
   },
   {
-    id: "cakev2-PLFY-BNB",
+    id: "cakev2-plfy-bnb",
     logo: "https://app.poolify.finance/assets/tokens/dummyToken.png",
     name: "PLFY-BNB LP",
     token: "PLFY-BNB LP",

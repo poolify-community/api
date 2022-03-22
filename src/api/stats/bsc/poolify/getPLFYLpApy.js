@@ -20,14 +20,14 @@ const getPLFYLpApy = async () => {
 
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
     getYearlyRewardsInUsd(REWARDS_MANAGER, 'tokens', ORACLE_ID),
-    getTotalStakedInUsd(REWARDS_MANAGER, PLFY, 'lps', 'cakev2-PLFY-BNB')
+    getTotalStakedInUsd(REWARDS_MANAGER, PLFY, 'lps', 'cakev2-plfy-bnb')
   ]);
 
   const simpleApy = yearlyRewardsInUsd.dividedBy(totalStakedInUsd);
 
   const apy = compound(simpleApy, DAILY_HPY, 1, 1);
 
-  return { 'cakev2-PLFY-BNB': apy };
+  return { 'cakev2-plfy-bnb': apy };
 };
 
 const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) => {
