@@ -16,7 +16,7 @@ const PLFY = bsc.tokens.PLFY.address;
 const REWARDS_MANAGER = bsc.platforms.poolifyfinance.rewardManager;
 const ORACLE_ID = 'PLFY';
 
-const getPLFYMaxiV2Apy = async () => {
+const getPLFYLpApy = async () => {
 
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
     getYearlyRewardsInUsd(REWARDS_MANAGER, 'tokens', ORACLE_ID),
@@ -62,4 +62,4 @@ const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) =>
   return yearlyRewardsInUsd;
 };
 
-module.exports = getPLFYMaxiV2Apy;
+module.exports = getPLFYLpApy;

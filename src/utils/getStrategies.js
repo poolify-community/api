@@ -6,7 +6,7 @@ import {ChainId} from '../address-book';
 
 const BATCH_SIZE = 128;
 
-const vaultAbi = require('../abis/BeefyVaultV6.json');
+const vaultAbi = require('../abis/PoolifyVault.json');
 
 const getStrategies = async (vaults, chain) => {
   // Setup multichain

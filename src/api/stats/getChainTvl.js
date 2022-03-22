@@ -5,7 +5,7 @@ const { MULTICHAIN_POOLS } = require('../../constants');
 const fetchPrice = require('../../utils/fetchPrice');
 const { EXCLUDED_IDS_FROM_TVL } = require('../../constants');
 
-const vaultAbi = require('../../abis/BeefyVaultV6.json');
+const vaultAbi = require('../../abis/PoolifyVault.json');
 const { getTotalStakedInUsd } = require('../../utils/getTotalStakedInUsd');
 import {ChainId,ChainIdReverse} from '../../address-book';
 
@@ -29,6 +29,7 @@ const getChainTvl = async chain => {
     }
 
     const vaultBal = vaultBalances[i];
+    console.log('vaultBal',vaultBal);
     let tokenPrice = 0;
     try {
       tokenPrice = await fetchPrice({ oracle: vault.oracle, id: vault.oracleId });
@@ -45,13 +46,14 @@ const getChainTvl = async chain => {
     tvls[chainId] = { ...tvls[chainId], ...item };
   }
 
+  /*
   if (chain.governancePool) {
     let governanceTvl = await getGovernanceTvl(chainId, chain.governancePool);
     tvls[chainId] = { ...tvls[chainId], ...governanceTvl };
   } else {
     console.log('no gov pool');
   }
-
+  */
   return tvls;
 };
 
@@ -62,12 +64,13 @@ const getVaultBalances = async (chainId, vaults) => {
   vaults.forEach((vault,index) => {
     const vaultContract = new web3.eth.Contract(vaultAbi, vault.vaultContractAddress);
     balanceCalls.push({
-      balance: vault.vaultContractAddress?vaultContract.methods.balance():'0.0',
+      balance: vault.vaultContractAddress == '0xe5370AC4222Be4C6E3009290Cc5E6284523FBF6B'?vaultContract.methods.balance_want():vaultContract.methods.balance(),
       position: index.toString()
     });
   });
   
   const res = await multicall.all([balanceCalls],{traditional:true});
+  console.log('res getVaultBalances',res);
   return res[0].map(v => new BigNumber(v.balance));
 };
 
