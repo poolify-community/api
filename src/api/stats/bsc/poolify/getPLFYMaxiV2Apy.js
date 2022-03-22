@@ -18,6 +18,7 @@ const ORACLE = 'tokens';
 const ORACLE_ID = 'PLFY';
 
 const getPLFYMaxiV2Apy = async () => {
+  console.log('>  getPLFYMaxiV2Apy');
 
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
     getYearlyRewardsInUsd(REWARDS_MANAGER, ORACLE, ORACLE_ID),

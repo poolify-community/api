@@ -20,7 +20,6 @@ const updateApys = async () => {
     const results = await Promise.allSettled([
       getBSCApys()
     ]);
-    console.log('results APY calls',results);
 
     for (const result of results) {
       if (result.status !== 'fulfilled') {

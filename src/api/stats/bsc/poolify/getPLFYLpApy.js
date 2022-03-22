@@ -17,6 +17,7 @@ const REWARDS_MANAGER = bsc.platforms.poolifyfinance.rewardManager;
 const ORACLE_ID = 'PLFY';
 
 const getPLFYLpApy = async () => {
+  console.log('>  getPLFYLpApy');
 
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
     getYearlyRewardsInUsd(REWARDS_MANAGER, 'tokens', ORACLE_ID),

@@ -19,6 +19,7 @@ const getChainTvl = async chain => {
   const vaults    = MULTICHAIN_POOLS[chainName];
 
   const vaultBalances = await getVaultBalances(chainId, vaults);
+  console.log('vaultBalances',vaultBalances);
   let tvls = { [chainId]: {} };
   for (let i = 0; i < vaults.length; i++) {
     const vault = vaults[i];
@@ -29,7 +30,6 @@ const getChainTvl = async chain => {
     }
 
     const vaultBal = vaultBalances[i];
-    console.log('vaultBal',vaultBal);
     let tokenPrice = 0;
     try {
       tokenPrice = await fetchPrice({ oracle: vault.oracle, id: vault.oracleId });
@@ -64,7 +64,7 @@ const getVaultBalances = async (chainId, vaults) => {
   vaults.forEach((vault,index) => {
     const vaultContract = new web3.eth.Contract(vaultAbi, vault.vaultContractAddress);
     balanceCalls.push({
-      balance: vault.vaultContractAddress == '0xe5370AC4222Be4C6E3009290Cc5E6284523FBF6B'?vaultContract.methods.balance_want():vaultContract.methods.balance(),
+      balance: vaultContract.methods.balance(),
       position: index.toString()
     });
   });

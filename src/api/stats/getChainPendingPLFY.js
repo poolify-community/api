@@ -12,7 +12,7 @@ const MasterChef = require('../../abis/MasterChef.json');
 import {ChainIdReverse,addressBook} from '../../address-book';
 
 const { bsc } = addressBook;
-const REWARDS_MANAGER = '0xFC11C0C53BF631e979b3478B25DF2FaaCc61E04E';// bsc.platforms.poolifyfinance.rewardManager;
+const REWARDS_MANAGER = bsc.platforms.poolifyfinance.rewardManager;
 
 
 const getChainPendingPLFY = async chain => {
