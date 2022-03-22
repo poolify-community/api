@@ -1,5 +1,6 @@
 const { getStrategies } = require('../../utils/getStrategies.js');
 const { getLastHarvests } = require('../../utils/getLastHarvests.js');
+const { getPendingPLFY } = require('../../utils/getPendingPLFY.js');
 const { MULTICHAIN_POOLS } = require('../../constants');
 
 const INIT_DELAY = 0 * 1000;
@@ -27,6 +28,8 @@ const updateMultichainVaults = async () => {
       let chainVaults = MULTICHAIN_POOLS[chain];
           chainVaults = await getStrategies(chainVaults, chain);
           chainVaults = await getLastHarvests(chainVaults, chain);
+          chainVaults = await getPendingPLFY(chainVaults, chain);
+          console.log('chainVaults',chainVaults);
 
       var chainVaultsCounter = 0;
       var chainActiveVaultsCounter = 0;

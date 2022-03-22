@@ -10,7 +10,6 @@ const price = require('./api/price');
 //const gov = require('./api/stats/gov');
 //const cmc = require('./api/cmc');
 const tvl = require('./api/tvl');
-const rewards = require('./api/rewards');
 const multichainVaults = require('./api/vaults');
 //const { plfybuyback } = require('./api/stats/plfybuyback/index');
 
@@ -24,8 +23,6 @@ router.get('/apy/breakdown', stats.apyBreakdowns);
 
 router.get('/tvl', tvl.vaultTvl);
 //router.get('/cmc', cmc.vaults);
-
-router.get('/pending-rewards', rewards.pendingPLFY);
 
 router.get('/supply', supply.supply);
 //router.get('/supply/total', supply.total);
