@@ -29,7 +29,7 @@ const updateMultichainVaults = async () => {
           chainVaults = await getStrategies(chainVaults, chain);
           chainVaults = await getLastHarvests(chainVaults, chain);
           chainVaults = await getPendingPLFY(chainVaults, chain);
-          console.log('chainVaults',chainVaults);
+          //console.log('chainVaults',chainVaults);
 
       var chainVaultsCounter = 0;
       var chainActiveVaultsCounter = 0;

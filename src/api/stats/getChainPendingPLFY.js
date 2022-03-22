@@ -3,12 +3,8 @@ const { MultiCall } = require('eth-multicall');
 const { web3Factory, multicallAddress } = require('../../utils/web3');
 const { MULTICHAIN_POOLS } = require('../../constants');
 const { getStrategies } = require('../../utils/getStrategies.js');
-const getBlockNumber = require('../../utils/getBlockNumber');
 const RewardManager_ABI = require('../../abis/PoolifyRewardManager.json');
 const Strategy_ABI = require('../../abis/common/Strategy/StrategyPLFY.json');
-const StrategyLiquidity_ABI = require('../../abis/common/Strategy/StrategyPLFYLiquidity.json');
-import Web3 from 'web3';
-const MasterChef = require('../../abis/MasterChef.json');
 import {ChainIdReverse,addressBook} from '../../address-book';
 
 const { bsc } = addressBook;
@@ -81,6 +77,7 @@ const getVaultPendingPLFY = async (chainId, vaults) => {
   const web3 = web3Factory(chainId);
   const multicall = new MultiCall(web3, multicallAddress(chainId));
   const pendingCalls = [];
+  const pendingBounty = [];
   vaults = await getStrategies(vaults,ChainIdReverse[chainId]);
   const rewardManagerContract = new web3.eth.Contract(RewardManager_ABI,REWARDS_MANAGER);
 
@@ -91,13 +88,24 @@ const getVaultPendingPLFY = async (chainId, vaults) => {
       pendingReward: rewardManagerContract.methods.pendingPoolify(vault.rewardManagerPoolIndex,vault.strategy), //rewardManagerPoolIndex
       position: index.toString()
     });
+    let _strategyContract = new web3.eth.Contract(Strategy_ABI,vault.strategy)
+    pendingBounty.push({
+      bountyFee:_strategyContract.methods.CALL_FEE(),
+      bountyPrecision:_strategyContract.methods.CALL_PRECISION(),
+      position: index.toString()
+    });
+
   });
 
   
-  const res = await multicall.all([pendingCalls],{traditional:true});
+  const res = await multicall.all([pendingCalls,pendingBounty],{traditional:true});
   let result = {};
   vaults.map((v,i) => {
-    result[v.id] = res[0][i].pendingReward;
+    result[v.id] = {
+      pendingReward:res[0][i].pendingReward,
+      bountyFee:res[1][i].bountyFee,
+      bountyPrecision:res[1][i].bountyPrecision
+    };
   });
   return result;
 };
