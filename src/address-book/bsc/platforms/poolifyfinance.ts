@@ -7,4 +7,5 @@ export const poolifyfinance = {
   treasury: '', // Treasury contract
   gasPrice: '', // Gas price contract
   multicall: '0xd5Cd02c90d9DeddffC457763fAe7bA77857D5975', // Multicall contract
+  harvestAll: '0x838A7Da98eC630Cd9281C824BC85287D261135D8' // Harvest Multiple Vault at once
 } as const;
