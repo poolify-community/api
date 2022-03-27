@@ -29,7 +29,7 @@ const getPLFYMaxiV2Apy = async () => {
 
   const apy = compound(simpleApy, DAILY_HPY, 1, 1);
 
-  return { 'plfy-maxi-v2': apy };
+  return { 'plfy-maxi': apy };
 };
 
 const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) => {

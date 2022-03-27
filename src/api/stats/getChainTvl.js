@@ -19,7 +19,7 @@ const getChainTvl = async chain => {
   const vaults    = MULTICHAIN_POOLS[chainName];
 
   const vaultBalances = await getVaultBalances(chainId, vaults);
-  console.log('vaultBalances',vaultBalances);
+  //console.log('vaultBalances',vaultBalances);
   let tvls = { [chainId]: {} };
   for (let i = 0; i < vaults.length; i++) {
     const vault = vaults[i];

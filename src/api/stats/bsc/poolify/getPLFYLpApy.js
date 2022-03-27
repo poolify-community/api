@@ -28,7 +28,7 @@ const getPLFYLpApy = async () => {
 
   const apy = compound(simpleApy, DAILY_HPY, 1, 1);
 
-  return { 'cakev2-plfy-bnb': apy };
+  return { 'plfy-bnb': apy };
 };
 
 const getYearlyRewardsInUsd = async (rewardsManagerAddress, oracle, oracleId) => {

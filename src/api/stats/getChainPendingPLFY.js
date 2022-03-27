@@ -12,14 +12,14 @@ const REWARDS_MANAGER = bsc.platforms.poolifyfinance.rewardManager;
 
 
 const getChainPendingPLFY = async chain => {
-  console.log('chain',chain);
+  //console.log('chain',chain);
 
   const chainId   = chain.chainId;
   const chainName = ChainIdReverse[chainId];
   const vaults    = MULTICHAIN_POOLS[chainName];
 
   const vaultPendingPLFY = await getVaultPendingPLFY(chainId, vaults);
-    console.log('>  vaultPendingPFY',vaultPendingPLFY);
+  //console.log('>  vaultPendingPFY',vaultPendingPLFY);
 
   return vaultPendingPLFY;
 };
@@ -83,7 +83,7 @@ const getVaultPendingPLFY = async (chainId, vaults) => {
 
   vaults.forEach((vault,index) => {
     //console.log('vault',vault);
-    console.log('config',vault.rewardManagerPoolIndex,vault.strategy,REWARDS_MANAGER);
+    //console.log('config',vault.rewardManagerPoolIndex,vault.strategy,REWARDS_MANAGER);
     pendingCalls.push({
       pendingReward: rewardManagerContract.methods.pendingPoolify(vault.rewardManagerPoolIndex,vault.strategy), //rewardManagerPoolIndex
       position: index.toString()

@@ -3,7 +3,7 @@ const getChainPendingPLFY = require('./getChainPendingPLFY.js');
 const { BSC_CHAIN_ID } = require('../../constants');
 
 const INIT_DELAY = 40 * 1;
-const REFRESH_INTERVAL = 1 * 3 * 1000; // 3 second(s)
+const REFRESH_INTERVAL = 1 * 7 * 1000; // 3 second(s)
 
 let pendingRewards = {};
 
