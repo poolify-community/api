@@ -7,7 +7,7 @@ const getPLFYMaxiV2Apy = require('./poolify/getPLFYMaxiV2Apy');
 
 const getApys = [
   //getPLFYGovApy,
-  getPLFYLpApy,
+  //getPLFYLpApy, /** Work to finish !!!!  **/
   getPLFYMaxiV2Apy,
   //getCakeApys,
   //getCakePoolApy,
