@@ -27,7 +27,7 @@ export const getApyBreakdown = (
     const totalApy = getFarmWithTradingFeesApy(
       simpleApr,
       tradingApr,
-      BASE_HPY,
+      pool.customHPY ?? BASE_HPY,
       1,
       SHARE_AFTER_PERFORMANCE_FEE
     );

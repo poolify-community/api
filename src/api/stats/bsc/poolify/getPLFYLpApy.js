@@ -1,18 +1,14 @@
-const BigNumber = require('bignumber.js');
-const { bscWeb3: web3 } = require('../../../../utils/web3');
+import { addressBook } from '../../../../address-book';
 import { getMasterChefApys } from '../../common/getMasterChefApys';
 
+const BigNumber = require('bignumber.js');
+const { bscWeb3: web3 } = require('../../../../utils/web3');
 const RewardManager_ABI = require('../../../../abis/PoolifyRewardManager.json');
-const fetchPrice = require('../../../../utils/fetchPrice');
-const { getTotalStakedInUsd } = require('../../../../utils/getTotalStakedInUsd');
-const { compound } = require('../../../../utils/compound');
-const { DAILY_HPY,BSC_CHAIN_ID } = require('../../../../constants');
-const getBlockNumber = require('../../../../utils/getBlockNumber');
+const { BSC_CHAIN_ID } = require('../../../../constants');
+const pools = require('../../../../data/poolifyLpPools.json');
 
-import { addressBook } from '../../../../address-book';
 
 const { bsc } = addressBook;
-
 const PLFY = bsc.tokens.PLFY.address;
 const REWARDS_MANAGER = bsc.platforms.poolifyfinance.rewardManager;
 const ORACLE_ID = 'PLFY';
@@ -20,19 +16,17 @@ const ORACLE_ID = 'PLFY';
 const getPLFYLpApy = async () =>
   await getMasterChefApys({
     web3: web3,
-    chainId: chainId,
+    chainId: BSC_CHAIN_ID,
     masterchef: REWARDS_MANAGER,
     masterchefAbi: RewardManager_ABI,
     tokenPerBlock: 'poolifyPerBlock',
     hasMultiplier: false,
-    secondsPerBlock: 1,
-    allocPointIndex: '2',
     pools: pools,
     oracleId: 'PLFY',
     oracle: 'tokens',
     decimals: '1e18',
     tradingFeeInfoClient: null,
-    liquidityProviderFee: null,
+    liquidityProviderFee: 0.0017, // Pancake Swap Liquidity Fee
     log: true,
   });
 

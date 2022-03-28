@@ -93,6 +93,7 @@ export const getAmmTokenPrice = async tokenSymbol => {
 
 export const getAmmLpPrice = async lpName => {
   const lpPrices = await getAmmLpPrices();
+  console.log('lpPrices',lpPrices);
   if (lpPrices.hasOwnProperty(lpName)) {
     return lpPrices[lpName];
   }

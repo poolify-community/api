@@ -12,9 +12,9 @@ import {
   getTradingFeeApr,
 } from '../../../utils/getTradingFeeApr';
 
-import { getBlockNumber } from '../../../utils/getBlockNumber';
-import { getBlockTime } from '../../../utils/getBlockTime';
-import { fetchPrice } from '../../../utils/fetchPrice';
+import getBlockNumber from '../../../utils/getBlockNumber';
+import getBlockTime from '../../../utils/getBlockTime';
+import  fetchPrice  from '../../../utils/fetchPrice';
 
 /*
 export interface MasterChefApysParams {
@@ -71,7 +71,6 @@ const getTradingAprs = async (params) => {
 
 const getFarmApys = async (params) => {
   const apys = [];
-
   const tokenPrice = await fetchPrice({ oracle: params.oracle, id: params.oracleId });
   const { multiplier, blockRewards, totalAllocPoint } = await getMasterChefData(params);
   const { balances, allocPoints } = await getPoolsData(params);
@@ -103,8 +102,8 @@ const getFarmApys = async (params) => {
 
     const secondsPerYear = 31536000;
     const yearlyRewards = poolBlockRewards.dividedBy(secondsPerBlock).times(secondsPerYear);
+    
     let yearlyRewardsInUsd = yearlyRewards.times(tokenPrice).dividedBy(params.decimals);
-
     if (params.burn) {
       yearlyRewardsInUsd = yearlyRewardsInUsd.times(1 - params.burn);
     }
@@ -150,16 +149,16 @@ const getPoolsData = async (params) => {
   const allocPointCalls = [];
   params.pools.forEach(pool => {
     const tokenContract = new params.web3.eth.Contract(ERC20_ABI, pool.address);
+    let _balanceTarget = pool.strat ?? params.masterchef;
     balanceCalls.push({
-      balance: tokenContract.methods.balanceOf(pool.strat ?? params.masterchef),
+      balance: tokenContract.methods.balanceOf(_balanceTarget),
     });
     allocPointCalls.push({
       allocPoint: masterchefContract.methods.poolInfo(pool.poolId),
     });
   });
 
-  const res = await multicall.all([balanceCalls, allocPointCalls]);
-
+  const res = await multicall.all([balanceCalls,allocPointCalls]);
   const balances = res[0].map(v => new BigNumber(v.balance));
   const allocPoints = res[1].map(v => v.allocPoint[params.allocPointIndex ?? '1']);
   return { balances, allocPoints };

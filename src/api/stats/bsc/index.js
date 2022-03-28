@@ -1,13 +1,13 @@
 
 //const getCakeApys = require('./pancake/getCakeApys');
 //const getCakePoolApy = require('./pancake/getCakePoolApy');
-const getPLFYLpApy = require('./poolify/getPLFYLpApy');
+const { getPLFYLpApy } = require('./poolify/getPLFYLpApy');
 const getPLFYMaxiV2Apy = require('./poolify/getPLFYMaxiV2Apy');
 //const getPLFYGovApy = require('./poolify/getPLFYGovApy');
 
 const getApys = [
   //getPLFYGovApy,
-  //getPLFYLpApy, /** Work to finish !!!!  **/
+  getPLFYLpApy, /** Work to finish !!!!  **/
   getPLFYMaxiV2Apy,
   //getCakeApys,
   //getCakePoolApy,
@@ -21,7 +21,9 @@ const getBSCApys = async () => {
   let apyBreakdowns = {};
 
   let promises = [];
-  getApys.forEach(getApy => promises.push(getApy()));
+  getApys.forEach(_func => {
+    promises.push(_func())
+  });
   const results = await Promise.allSettled(promises);
 
   for (const result of results) {

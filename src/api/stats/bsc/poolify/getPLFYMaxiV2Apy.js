@@ -18,8 +18,6 @@ const ORACLE = 'tokens';
 const ORACLE_ID = 'PLFY';
 
 const getPLFYMaxiV2Apy = async () => {
-  console.log('>  getPLFYMaxiV2Apy');
-
   const [yearlyRewardsInUsd, totalStakedInUsd] = await Promise.all([
     getYearlyRewardsInUsd(REWARDS_MANAGER, ORACLE, ORACLE_ID),
     getTotalStakedInUsd(REWARDS_MANAGER, PLFY, ORACLE, ORACLE_ID)
@@ -27,7 +25,7 @@ const getPLFYMaxiV2Apy = async () => {
 
   const simpleApy = yearlyRewardsInUsd.dividedBy(totalStakedInUsd);
 
-  const apy = compound(simpleApy, DAILY_HPY, 1, 1);
+  const apy = compound(simpleApy, /* DAILY_HPY */ 1, 1, 1);
 
   return { 'plfy-maxi': apy };
 };

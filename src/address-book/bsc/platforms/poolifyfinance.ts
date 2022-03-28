@@ -6,6 +6,6 @@ export const poolifyfinance = {
   rewardManager: '0x3d7CaE4CD61Ba4BE9A50D354204B6Fe5c772BfFa', // Poolify Reward Manager
   treasury: '', // Treasury contract
   gasPrice: '', // Gas price contract
-  multicall: '0xd5Cd02c90d9DeddffC457763fAe7bA77857D5975', // Multicall contract
+  multicall: '0x7BB2DEe8bF04F811525d00e2bF694dD1D29F0a62', // Multicall contract
   harvestAll: '0x838A7Da98eC630Cd9281C824BC85287D261135D8' // Harvest Multiple Vault at once
 } as const;

@@ -1,0 +1,24 @@
+[
+    {
+      "name": "plfy-bnb",
+      "oracleId":"cakev2-plfy-bnb",
+      "address": "0x976a7753c88EBFD2d3154B8764a0176769e5a372",
+      "decimals": "1e18",
+      "poolId": 1,
+      "chainId": 97,
+      "customHPY":1,
+      "lp0": {
+        "address": "0xCCa640c3AC0DaE0F66bDf25C3049992B82B7dE1c",
+        "oracle": "tokens",
+        "oracleId": "PLFY",
+        "decimals": "1e18"
+      },
+      "lp1": {
+        "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        "oracle": "tokens",
+        "oracleId": "WBNB",
+        "decimals": "1e18"
+      }
+    }
+  ]
+  
