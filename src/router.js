@@ -26,8 +26,8 @@ router.get('/tvl', tvl.vaultTvl);
 //router.get('/cmc', cmc.vaults);
 
 router.get('/supply', supply.supply);
-//router.get('/supply/total', supply.total);
-//router.get('/supply/circulating', supply.circulating);
+router.get('/supply/total', supply.total);
+router.get('/supply/circulating', supply.circulating);
 
 //router.get('/earnings', gov.earnings);
 //router.get('/holders', gov.holderCount);
