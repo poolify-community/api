@@ -3,7 +3,7 @@
 function supply(ctx) {
   ctx.body = {
     total: 100000000, // 100m
-    circulating: 1000000, // 1m
+    circulating: 10, // 10
   };
 }
 
@@ -12,7 +12,7 @@ function total(ctx) {
 }
 
 function circulating(ctx) {
-  ctx.body = 1000000; // 1m
+  ctx.body = 10; // 10
 }
 
 module.exports = { supply, total, circulating };
